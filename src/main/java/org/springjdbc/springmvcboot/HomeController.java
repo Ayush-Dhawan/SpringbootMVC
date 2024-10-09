@@ -12,7 +12,7 @@ public class HomeController {
     @RequestMapping("/")
     public String home(){
         System.out.println("home called");
-        return "index.jsp";
+        return "index";
     }
 
     @RequestMapping("add")
@@ -23,7 +23,7 @@ public class HomeController {
 //        session.setAttribute("sum", i+j);
 
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("add.jsp");
+        mv.setViewName("add");
         mv.addObject("sum", i + j);
         return mv;
     }
