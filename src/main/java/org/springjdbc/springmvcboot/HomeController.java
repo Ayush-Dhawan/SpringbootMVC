@@ -2,6 +2,7 @@ package org.springjdbc.springmvcboot;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    StudentRepo repo;
+
     @RequestMapping("/")
     public String home(){
         System.out.println("home called");
@@ -19,10 +24,8 @@ public class HomeController {
 
     @GetMapping("/getAll")
     public ModelAndView getStudents(ModelAndView mv){
-        System.out.println("getStudents called");
-        FakeDB db = new FakeDB();
         mv.setViewName("getAll");
-        mv.addObject("db_data", db.toString());
+        mv.addObject("db_data", repo.findAll());
 
         return mv;
     }
