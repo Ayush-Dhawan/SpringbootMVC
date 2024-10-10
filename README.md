@@ -1,42 +1,41 @@
 <h1>Step 1: </h1>
-<p>Create a Spring boot project of type Spring web (enables MVC)</p>
+<p>Add this dependancy</p>
 
-<h2>Step 2: </h2>
-<p>Create a webapp folder within src/main where we store our jsp files</p>
+         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>3.3.3</version>
+        </dependency>
 
-<h1>Step 3: </h1>
-<p>We require controller classes which manage requests and responses, create HomeController.java which is used to call home</p>
+<h1>Step 2: </h1>
+<p>Create a repository constructor for students called StudentRepo</p> <br />
+<p>It must be an interface which extends JpaRepository</p>
 
-            @RequestMapping("/")
-        public String home(){
-            System.out.println("home called");
-            return "index.jsp";
+        package org.springjdbc.springmvcboot;
+        import org.springframework.data.jpa.repository.JpaRepository;
+
+        public interface StudentRepo extends JpaRepository<Student, Integer> {
+
         }
 
+<p>JpaRepository comes fom the library we added earlier and it contains alot of inbuilt methods such as findAll()</p>
+
+<h1>Step 3: </h1>
+<p>In the homeController create an object of student repo</p>
+
+         @Autowired
+         StudentRepo repo;
+
 <h1>Step 4: </h1>
-<p>Make sure to add tomcat jasper which helps converting jsp to servlets and show on the browser, else it will download the jsp files on hitting the url</p> <br />
-<p> Jasper version should be same as tomcat version</p>
+<p>Try using the default findAll method without any implementation written by you to find that it actually works!</p>
 
-<h1>Step 5: </h1>
-<p>Creating a form which takes 2 numbers and adds them</p>
+    @GetMapping("/getAll")
+    public ModelAndView getStudents(ModelAndView mv){
+        mv.setViewName("getAll");
+        mv.addObject("db_data", repo.findAll());
 
-    <form action="add">
-        Enter 1st number: <input type="number" name="num1" />
-        Enter 2nd number: <input type="number" name="num2" />
-        <input type="submit" />
-    </form>
-
-<h1>For simplicity purposes add RequestMapping for add in homecontroller itself</h1>
-
-        @RequestMapping("add")
-    public ModelAndView add(HttpServletRequest request, @RequestParam("num1") int i,@RequestParam("num2") int j){
-    //        int i = Integer.parseInt(request.getParameter("num1"));
-    //        int j = Integer.parseInt(request.getParameter("num2"));
-    //        HttpSession session = request.getSession();
-    //        session.setAttribute("sum", i+j);
-
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("add.jsp");
-        mv.addObject("sum", i + j);
         return mv;
     }
+<p>This is why spring-boot-starter-data-jpa is such a deal breaker</p> <br />
+<p>It implements the commonly used methods such as findAll and findById on its own.</p>
+
