@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,16 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    welcome
-
-<form action="add" method="post">
-    Enter 1st number: <input type="number" name="num1" />
-    Enter 2nd number: <input type="number" name="num2" />
-    <input type="submit" />
-</form>
-
-<form action="getAll" method="get">
-    <input type="submit" />
-</form>
+    students: ${db_data}
 </body>
 </html>

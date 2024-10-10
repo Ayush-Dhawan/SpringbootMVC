@@ -3,7 +3,9 @@ package org.springjdbc.springmvcboot;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,7 +17,18 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping("add")
+    @GetMapping("/getAll")
+    public ModelAndView getStudents(ModelAndView mv){
+        System.out.println("getStudents called");
+        FakeDB db = new FakeDB();
+        mv.setViewName("getAll");
+        mv.addObject("db_data", db.toString());
+
+        return mv;
+    }
+
+    //without post method declaration and just having "add", it worked with both get and post or use PostMapping annotation
+    @RequestMapping(value="add", method = RequestMethod.POST)
     public ModelAndView add(HttpServletRequest request, @RequestParam("num1") int i,@RequestParam("num2") int j){
 //        int i = Integer.parseInt(request.getParameter("num1"));
 //        int j = Integer.parseInt(request.getParameter("num2"));
